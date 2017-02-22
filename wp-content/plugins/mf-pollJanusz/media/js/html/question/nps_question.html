@@ -1,0 +1,41 @@
+<div class="question-edit-main">
+	<div>
+		<div class="input-block">
+			<label for="q-title">{{'CONTENT_OF_QUESTION' | translate}}:</label>
+			<textarea type="text" name="title" id="q-title" ng-model="element.title" required></textarea>
+		    <div ng-show="editQuestion.$submitted || editQuestion.title.$touched" class="input-message">
+		      	<div ng-show="editQuestion.title.$error.required">{{ 'MUST_BE_NOT_EMPTY'| translate }}</div>
+		    </div>
+	    </div>
+		<div class="input-block">
+			<label for="q-description">{{'DESCRIPTION' | translate}}:</label>
+			<textarea ng-model="element.description" name="description" id="q-description"></textarea>
+	    </div>
+		<div class="answers-block" ng-init="models = [1,2,3,4,5,6,7,8,9,10]">
+			<span class="answer-block-title">{{ 'ANSWERS' | translate }}:</span>
+
+      <div class="input-block" ng-repeat="model in models">
+          <input ng-model="model" ng-readonly="true" value="{{ model }}">
+      </div>
+
+
+	    </div>
+	</div>
+</div>
+<div class="question-edit-sidebar">
+	<div>
+		<div class="sidebar-title">{{ 'SETTINGS' | translate }}:</div>
+		<div class="input-checkbox">
+			<input type="checkbox" id="q-require" class="regular-checkbox" name="require" ng-model="element.require" /><label for="q-require"></label><label for="q-require">{{ 'QUESTION_IS_REQUIRE' | translate }}</label>
+		</div>
+		<div class="input-checkbox">
+			<input type="checkbox" id="q-deepening-questions" class="regular-checkbox" name="deepening-questions" ng-model="element.deepening-questions" /><label for="q-deepening-questions"></label><label for="q-deepening-questions">{{ 'POSSIBILITY_OF_DEEPENING_QUESTIONS' | translate }}</label>
+		</div>
+		<div class="input-checkbox">
+			<input type="checkbox" id="q-left-side-scale" class="regular-checkbox" name="left-side-scale" ng-model="element.left-side-scale" /><label for="q-left-side-scale"></label><label for="q-left-side-scale">{{ 'TEXT_ON_THE_LEFT_SIDE_SCALE' | translate }}</label>
+		</div>
+		<div class="input-checkbox">
+			<input type="checkbox" id="q-right-side-scale" class="regular-checkbox" name="right-side-scale" ng-model="element.right-side-scale" /><label for="q-right-side-scale"></label><label for="q-right-side-scale">{{ 'TEXT_ON_THE_RIGHT_SIDE_SCALE' | translate }}</label>
+		</div>
+	</div>
+</div>

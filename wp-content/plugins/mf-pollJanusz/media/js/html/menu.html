@@ -1,0 +1,21 @@
+
+<table class="widefat">
+    <thead>
+        <tr>
+            <th>ID Question</th>
+            <th>Question</th>
+            <th>url</th>
+            <th colspan="3">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="poll in polls">
+            <td><strong>{{poll.poll_id}}</strong></td>
+            <td>{{poll.name}}</td>
+            <td><a href="">url</a></td>
+            <td><a href="" class="edit">Logs</a></td>
+            <td><a href="#/edit/{{poll.poll_id}}" class="edit">Edit</a></td>
+            <td><a href="" onclick="" class="delete">Delete</a></td>
+        </tr>
+    </tbody>
+</table>

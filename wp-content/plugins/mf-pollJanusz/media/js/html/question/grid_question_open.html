@@ -1,0 +1,50 @@
+<div class="question-edit-main">
+	<div>
+		<div class="input-block">
+			<label for="q-title">{{'CONTENT_OF_QUESTION' | translate}}:</label>
+			<textarea type="text" name="title" id="q-title" ng-model="element.title" required></textarea>
+		    <div ng-show="editQuestion.$submitted || editQuestion.title.$touched" class="input-message">
+		      	<div ng-show="editQuestion.title.$error.required">{{ 'MUST_BE_NOT_EMPTY'| translate }}</div>
+		    </div>
+	    </div>
+		<div class="input-block">
+			<label for="q-description">{{'DESCRIPTION' | translate}}:</label>
+			<textarea ng-model="element.description" name="description" id="q-description"></textarea>
+	    </div>
+		<div class="answers-block col-2">
+			<span class="answer-block-title">{{ 'ANSWERS' | translate }}:</span>
+			<div class="input-block" ng-repeat="(key, answer) in element.answers">
+				<span class="counter">{{key + 1}}.</span>
+				<input type="text" name="answer{{key}}" id="q-answer-{{key}}" ng-model="answer.title" required>
+				<div ng-show="editQuestion.$submitted || editQuestion['answer'+key].$touched" class="input-message">
+			      	<div ng-show="editQuestion['answer'+key].$error.required">{{ 'ENTER_THE_CORRECT_OR_DELETE_ANSWER'| translate }}</div>
+			    </div>
+			    <span ng-click="delete_answer(answer)" class="delete-answer fa fa-remove" aria-hidden="true"></span>
+			</div>
+			<span class="button" ng-click="add_answer()">{{ 'ADD_ANSWER' | translate }}</span>
+	    </div>
+      <div class="scale-block col-2">
+        <span class="answer-block-title ng-binding">{{'SCALE' | translate}}:</span>
+        <div class="input-block" ng-repeat="(key, scale) in element.scales">
+  				<span class="counter ng-binding">{{key + 1}}.</span>
+          <input type="text" name="scale{{key}}" id="q-scale-{{key}}" ng-model="scale.title" required>
+  				<div ng-show="editQuestion.$submitted || editQuestion['scale'+key].$touched" class="input-message">
+  			      	<div ng-show="editQuestion['scale'+key].$error.required">{{ 'ENTER_THE_CORRECT_OR_DELETE_SCALE'| translate }}</div>
+  			    </div>
+  			  <span ng-click="delete_scale(scale)" class="delete-answer fa fa-remove" aria-hidden="true"></span>
+  			</div>
+        <span class="button ng-binding" ng-click="add_scale()">ADD_SCALE</span>
+      </div>
+	</div>
+</div>
+<div class="question-edit-sidebar">
+	<div>
+		<div class="sidebar-title">{{ 'SETTINGS' | translate }}:</div>
+		<div class="input-checkbox">
+			<input type="checkbox" id="q-require" class="regular-checkbox" name="require" ng-model="element.require" /><label for="q-require"></label><label for="q-require">{{ 'QUESTION_IS_REQUIRE' | translate }}</label>
+		</div>
+		<div class="input-checkbox">
+			<input type="checkbox" id="q-require-other-answer" class="regular-checkbox" name="require_other_answer" ng-model="element.require_other_answer" /><label for="q-require-other-answer"></label><label for="q-require-other-answer">{{ 'REQUIRED_ENTER_OTHER_ANSWER' | translate }}</label>
+		</div>
+	</div>
+</div>

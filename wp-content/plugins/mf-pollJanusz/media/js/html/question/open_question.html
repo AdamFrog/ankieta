@@ -1,0 +1,31 @@
+<div class="question-edit-main">
+	<div>
+		<div class="input-block">
+			<label for="q-title">{{'CONTENT_OF_QUESTION' | translate}}:</label>
+			<textarea type="text" name="title" id="q-title" ng-model="element.title" required></textarea>
+		    <div ng-show="editQuestion.$submitted || editQuestion.title.$touched" class="input-message">
+		      	<div ng-show="editQuestion.title.$error.required">{{ 'MUST_BE_NOT_EMPTY'| translate }}</div>
+		    </div>
+	    </div>
+		<div class="input-block">
+			<label for="q-description">{{'DESCRIPTION' | translate}}:</label>
+			<textarea ng-model="element.description" name="description" id="q-description"></textarea>
+	   </div>
+     <div class="input-block">
+       <label for="q-description">{{'HOW_MUCH_ANSWER' | translate}}:</label>
+       <select ng-model="page" name="answers_count" ng-options="n for n in [] | range:1:11">
+       </select>
+     </div>
+
+
+	</div>
+</div>
+<div class="question-edit-sidebar">
+	<div>
+		<div class="sidebar-title">{{ 'SETTINGS' | translate }}:</div>
+		<div class="input-checkbox">
+			<input type="checkbox" id="q-require" class="regular-checkbox" name="require" ng-model="element.require" /><label for="q-require"></label><label for="q-require">{{ 'QUESTION_IS_REQUIRE' | translate }}</label>
+		</div>
+
+	</div>
+</div>

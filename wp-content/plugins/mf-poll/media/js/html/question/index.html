@@ -1,0 +1,22 @@
+<div id="modal-question-edit">
+	<div id="modal-123" ng-show="visible" class="sample-show-hide">
+		<div class="mf-modal"></div>
+		<div class="mf-modal-container">
+			<div class="mf-modal-content">
+				<form name="editQuestion" class="css-form" novalidate>
+					<div class="mf-modal-header">
+						<h3>{{ 'QUESTION_EDIT' | translate }}</h3>
+						<span class="dashicons dashicons-no mf-modal-close hover-color" ng-click="close(editQuestion)" title="{{ 'CLOSE' | translate }}"></span>
+					</div>
+					<div class="mf-modal-inner">
+						<div ng-include="getTemplate()" class="clearfix"></div>
+					</div>
+					<div class="mf-modal-footer">
+						<input class="button button-primary" type="submit" ng-click="save()" value="{{ 'SAVE' | translate }}" ng-disabled="editQuestion.$invalid"/>
+						<button class="button" ng-click="close(editQuestion)">{{ 'CLOSE' | translate }}</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
