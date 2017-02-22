@@ -3,6 +3,6 @@ mfpoll_app.controller('MainController', function($scope, $route, $routeParams, $
 	$scope.$location = $location;
 	$scope.$routeParams = $routeParams;
 
-	$scope.menu = PLUGIN_URL + '/media/js/html/menu.html';
+	$scope.menu = MFPOLL_CONFIG['plugin_url'] + 'media/js/html/menu.html';
 
 });
