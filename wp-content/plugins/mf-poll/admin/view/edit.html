@@ -25,6 +25,7 @@
                             {{'QUESTION_TITLE' | translate }}
                             {{question.title}}
                             {{question.description}}
+                            <div>{{question.html}}</div>
                             <div class="question-control">
                                 <button ng-click="set_edit_element(question)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> {{ 'EDIT' | translate }}</button>
                                 <button ng-click="copy(question, key)"><i class="fa fa-files-o" aria-hidden="true"></i> {{ 'COPY' | translate }}</button>
@@ -39,6 +40,6 @@
         <button ng-click="add_page()" class="button add_page_button"><span>{{ 'ADD_PAGE' | translate }}</span></button>
         <question-edit question="editing_elem"></question-edit>
     </div>
-    <mf-modal header-title="{{ 'TEST' | translate }}" content="sadad  sdad d" button-text="{{ 'OPEN' | translate }}"></mf-modal>
+    <!--<mf-modal header-title="{{ 'TEST' | translate }}" content="sadad  sdad d" button-text="{{ 'OPEN' | translate }}"></mf-modal>-->
     <button ng-click="save_forms()" class="button">{{ 'SAVE' | translate }}</button>
 </div>

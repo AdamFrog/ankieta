@@ -115,6 +115,7 @@ function mf_media_poll() {
     wp_enqueue_script( 'admin_js_animate_mfpoll', 'https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-animate.js', false, '1.0.0', true);
     wp_enqueue_script( 'admin_js_sortable_mfpoll', 'https://cdnjs.cloudflare.com/ajax/libs/angular-ui-sortable/0.16.1/sortable.min.js', false, '1.0.0', true);
     wp_enqueue_script( 'admin_js_mfpoll', plugin_dir_url( __FILE__ ) . 'admin/main.js', false, '1.0.0', true);
+    wp_enqueue_script( 'admin_js_mfpoll_service_question', plugin_dir_url( __FILE__ ) . 'admin/service/question.js', false, '1.0.0', true);
     wp_enqueue_script( 'admin_js_main_mfpoll', plugin_dir_url( __FILE__ ) . 'admin/controller/main.js', false, '1.0.0', true);
     wp_enqueue_script( 'admin_js_services_mfpoll', plugin_dir_url( __FILE__ ) . 'admin/services.js', false, '1.0.0', true);
     wp_enqueue_script( 'admin_js_add_mfpoll', plugin_dir_url( __FILE__ ) . 'admin/controller/add.js', false, '1.0.0', true);

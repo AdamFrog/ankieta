@@ -1,4 +1,4 @@
-mfpoll_app.controller('EditController', function ($scope, $routeParams, $location) {
+mfpoll_app.controller('EditController', function ($scope, $routeParams, $location, Question) {
 
     $scope.config = MFPOLL_CONFIG;
 
@@ -90,7 +90,7 @@ mfpoll_app.controller('EditController', function ($scope, $routeParams, $locatio
      * Funkcja ustawia dane wejsciowo-testowe
      */
     var init = function () {
-        $scope.questions[0][0] = {
+        /*$scope.questions[0][0] = {
             'title': 'questions 1',
             'description': 'Opis',
             'type': 'text',
@@ -107,7 +107,29 @@ mfpoll_app.controller('EditController', function ($scope, $routeParams, $locatio
             'description': 'Opis',
             'type': 'single_choice',
             'answers': [{}, {}],
-        };
+        };*/
+        
+        for (var i = 0; i < 100; i++) {
+            $scope.questions[0][i] = {
+                'title': 'questions 2',
+                'description': 'Opis',
+                'type': 'text',
+                'show_title': false,
+            };
+        }
+        
+        for (var i = 0; i < 100; i++) {
+            Question.get_html([], function($response){
+                $scope.questions[0][i].html = $response.data.html;
+            });
+        }
+        
+        /*Question.get_html([], function($response){
+            $scope.questions[0][1].html = $response.data.html;
+        });
+        Question.get_html([], function($response){
+            $scope.questions[0][2].html = $response.data.html;
+        });*/
 
     };
     init();
@@ -120,12 +142,14 @@ mfpoll_app.controller('EditController', function ($scope, $routeParams, $locatio
  */
 mfpoll_app.component('questionEdit', {
     templateUrl: MFPOLL_CONFIG['plugin_url'] + 'admin/view/question/index.html',
-    controller: function ($scope) {
+    controller: function ($scope, Question) {
         if ($scope.element == undefined) {
             $scope.element = {};
         }
+        
         //Schowanie okienka
-        $scope.visible = false;
+        $scope.visible = false;    
+
 
         var ctrl = this;
 
@@ -137,6 +161,7 @@ mfpoll_app.component('questionEdit', {
                 //Jezeli nowa wartosc to to wyswietlamy okienko formularza
                 if (newValue) {
                     $scope.visible = true;
+                    //$scope.hide = undefined;
 
                     //Uzupelnienie formularza
                     if (ctrl.question != null) {
@@ -165,18 +190,23 @@ mfpoll_app.component('questionEdit', {
 
         //Zapisanie formularza (przypisanie wartosci do modelu)
         $scope.save = function () {
+            
+            Question.get_html($scope.element, function(response){
+                console.log(response);
+                $scope.element.html = response.data.html;
+                //Usuniecie z rodzica wartosci pozwoli to na ponowne otwarcie formularza przez $watch bo zostanie przypisana nowa wartosc
+                $scope.$parent.editing_elem = null;
 
-            //Usuniecie z rodzica wartosci pozwoli to na ponowne otwarcie formularza przez $watch bo zostanie przypisana nowa wartosc
-            $scope.$parent.editing_elem = null;
+                //Schowanie okienka
+                $scope.visible = false;
 
-            //Schowanie okienka
-            $scope.visible = false;
-
-            //Przypisanie wartosci do modelu
-            angular.forEach($scope.element, function (value, key) {
-                ctrl.question[key] = value;
+                //Przypisanie wartosci do modelu
+                angular.forEach($scope.element, function (value, key) {
+                    ctrl.question[key] = value;
+                });
+                console.log(ctrl.question);
             });
-
+            
         };
 
         //Zamkniecie okienka
