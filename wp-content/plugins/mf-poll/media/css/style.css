@@ -18,6 +18,19 @@ and open the template in the editor.
     Created on : 2017-02-24, 10:21:08
     Author     : Rafal
 */
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 2017-02-28, 13:06:36
+    Author     : Rafal
+*/
+.question {
+  max-width: 600px;
+  margin: 0px auto; }
+
 #type-poll {
   background-color: #0065B3; }
 
@@ -188,10 +201,6 @@ input.ng-invalid.ng-touched {
   height: 50px;
   z-index: 9;
   border-bottom: 1px solid #ccc; }
-
-.sortable-placeholder {
-  background-color: red;
-  margin-bottom: 0px; }
 
 .question-element {
   position: relative;
@@ -533,8 +542,66 @@ input[type="radio"].regular-radio {
 
 /* END PODSTAWOWA ANIMACJA */
 /* SORTOWANIE PYTA┼â */
+#questions-list .question-title {
+  display: none; }
+#questions-list .handle-page {
+  display: none; }
+#questions-list .sortable-placeholder {
+  background-color: rgba(0, 101, 179, 0.1);
+  border: none;
+  margin-bottom: 0px; }
+#questions-list .page .handle-question {
+  display: none; }
+#questions-list .page.sortable-question .question-title {
+  display: block; }
 #questions-list .page.sortable-question .add-question-btn {
   display: none; }
+#questions-list .page.sortable-question .sortable-list.empty {
+  min-height: 50px;
+  border: 2px dashed #0065B3;
+  background-color: rgba(0, 101, 179, 0.1); }
+#questions-list .page.sortable-question .question-element {
+  position: relative;
+  padding-left: 50px; }
+  #questions-list .page.sortable-question .question-element .question-content {
+    display: none; }
+  #questions-list .page.sortable-question .question-element .handle-question {
+    display: block;
+    position: absolute;
+    top: 0px;
+    left: 0px; }
+    #questions-list .page.sortable-question .question-element .handle-question i {
+      width: 50px;
+      height: 50px;
+      line-height: 50px;
+      text-align: center;
+      cursor: pointer;
+      font-size: 20px;
+      color: rgba(0, 0, 0, 0.2); }
+#questions-list .page.sortable-page .question-element {
+  display: none; }
+#questions-list .page.sortable-page .add-question-btn {
+  display: none; }
+#questions-list .page.sortable-page .handle-page {
+  display: block;
+  position: absolute;
+  left: 0px;
+  top: 0px; }
+  #questions-list .page.sortable-page .handle-page i {
+    background-color: white;
+    color: rgba(0, 0, 0, 0.2);
+    cursor: pointer; }
+#questions-list .page.sortable-page .page-number {
+  margin: 0px;
+  height: 50px;
+  line-height: 50px;
+  background-color: white;
+  text-align: left;
+  padding-left: 50px; }
+  #questions-list .page.sortable-page .page-number span {
+    background-color: white; }
+  #questions-list .page.sortable-page .page-number:after {
+    display: none; }
 
 /* END SORTOWANIE PYTA┼â */
 .hide {

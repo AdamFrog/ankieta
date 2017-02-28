@@ -5,18 +5,43 @@
  */
 
 
-mfpoll_app.service('Question', function ($http) {
+mfpoll_app.service('Question', function ($http, $httpParamSerializerJQLike) {
    
     
     this.get_html = function (question, success) {
         $http({
             method: 'POST',
             url: 'http://localhost/wordpress/wp-content/plugins/mf-poll/application/bootstrap.php?controller=question&action=index',
-            data: question
+            data: $httpParamSerializerJQLike(angular.copy(question)),
+            //data: $httpParamSerializerJQLike({json: JSON.stringify(question)}),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).then(function(response) {
+            console.log(response);
             success(response);
         }, function errorCallback(response) {
+            console.log(response);
             success(response);
+            // called asynchronously if an error occurs
+            // or server returns response with an error status.
+        });
+    };
+    
+    
+    this.saveForms = function(model, success) {
+        console.log(model);
+        angular.forEach(model, function (value, key) {
+            alert('param 1' + param(value));
+        });
+        $http({
+            method: 'POST',
+            url: 'http://localhost/wordpress/wp-content/plugins/mf-poll/application/bootstrap.php?controller=question&action=save',
+            data: param(model),
+            //data: $httpParamSerializerJQLike({json: JSON.stringify(question)}),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        }).then(function(response) {
+           alert(response.data);
+        }, function errorCallback(response) {
+            console.log(response);
             // called asynchronously if an error occurs
             // or server returns response with an error status.
         });

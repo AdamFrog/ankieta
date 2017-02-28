@@ -10,6 +10,7 @@ and open the template in the editor.
 
 /* Konfiguracja */
 @import 'config';
+@import 'poll';
 
 #type-poll{ 
     background-color: $color-primary;
@@ -187,10 +188,6 @@ input.ng-valid.ng-touched {
     height: 50px;
     z-index: 9;
     border-bottom: 1px solid #ccc;
-}
-.sortable-placeholder{
-    background-color: red;
-    margin-bottom: 0px;
 }
 .question-element{
     position: relative;
@@ -557,9 +554,88 @@ input[type="radio"].regular-radio {
 
 /* SORTOWANIE PYTAŃ */
 #questions-list{
+    .question-title{
+        display: none;
+    }
+    .handle-page{
+        display: none;
+    }
+    .sortable-placeholder{
+        background-color: $opacity-primary;
+        border: none;
+        margin-bottom: 0px;
+    }
+    .page{
+        .handle-question{
+            display: none;
+        }
+    }
     .page.sortable-question{
+        .question-title{
+            display: block;
+        }
         .add-question-btn{
             display:none;
+        }
+        .sortable-list.empty{
+            min-height: 50px;
+            border: 2px dashed $color-primary;
+            background-color: $opacity-primary;
+        }
+        .question-element{
+            position: relative;
+            padding-left:50px;
+            .question-content{
+                display: none;
+            }
+            .handle-question{
+                display: block;
+                position: absolute;
+                top:0px;
+                left:0px;
+                i{
+                    width: 50px;
+                    height: 50px;
+                    line-height: 50px;
+                    text-align: center;
+                    cursor: pointer;
+                    font-size: 20px;
+                    color: $light-grey;
+                }
+            }
+        }
+    }
+    .page.sortable-page{
+        .question-element{
+            display: none;
+        }
+        .add-question-btn{
+            display:none;
+        }
+        .handle-page{
+            display: block;
+            position: absolute;
+            left:0px;
+            top:0px;
+            i{
+                background-color: white;
+                color: $light-grey;
+                cursor: pointer;
+            }
+        }
+        .page-number{
+            margin:0px;
+            height:50px;
+            line-height: 50px;
+            background-color: white;
+            text-align: left;
+            padding-left: 50px;
+            span{
+                background-color: white;
+            }
+            &:after{
+                display: none;
+            }
         }
     }
 }

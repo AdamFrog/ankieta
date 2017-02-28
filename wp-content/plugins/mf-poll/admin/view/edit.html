@@ -19,18 +19,19 @@
         <div class="page" ng-class="{'sortable-page': sort_page, 'sortable-question': sort_question}">
             <div ui-sortable="sortableOptionsPage" ng-model="questions" class="sortable-page">
                 <div ng-repeat="(key,page) in questions">
-                    <h3 class="page-number"><span>{{key + 1}} {{ 'PAGE' | translate }}</span></h3>
-                    <div ui-sortable="sortableOptions" ng-model="page" class="sortable-list">
+                    <h3 class="page-number"><span>{{key + 1}} {{ 'PAGE' | translate }}</span><span class="handle-page"><i class="fa fa-arrows-v"></i></span></h3>
+                    <div ui-sortable="sortableOptions" ng-model="page" class="sortable-list" ng-class="{'empty': !page.length}">
                         <div class="question-element" ng-repeat="(klucz,question) in page">
-                            {{'QUESTION_TITLE' | translate }}
-                            {{question.title}}
-                            {{question.description}}
-                            <div>{{question.html}}</div>
-                            <div class="question-control">
-                                <button ng-click="set_edit_element(question)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> {{ 'EDIT' | translate }}</button>
-                                <button ng-click="copy(question, key)"><i class="fa fa-files-o" aria-hidden="true"></i> {{ 'COPY' | translate }}</button>
-                                <button ng-click="remove(question, key)"><i class="fa fa-times" aria-hidden="true"></i></i> {{ 'REMOVE' | translate }}</button>
+                            <div class="question-title">{{question.title}}</div>
+                            <div class="question-content">
+                                <div ng-bind-html="to_trusted(question.html)"></div>
+                                <div class="question-control">
+                                    <button ng-click="set_edit_element(question)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> {{ 'EDIT' | translate }}</button>
+                                    <button ng-click="copy(question, key)"><i class="fa fa-files-o" aria-hidden="true"></i> {{ 'COPY' | translate }}</button>
+                                    <button ng-click="remove(question, key)"><i class="fa fa-times" aria-hidden="true"></i></i> {{ 'REMOVE' | translate }}</button>
+                                </div>
                             </div>
+                            <span class="handle-question"><i class="fa fa-arrows-v"></i></span>
                         </div>
                     </div>
                     <mf-modal class="add-question-btn" header-title="{{ 'ADD_QUESTION' | translate }}" content="add-question.html" save="save_modal_add_question" button-text="{{ 'ADD_QUESTION' |translate }}" page="{{key}}"></mf-modal>

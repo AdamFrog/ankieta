@@ -1,21 +1,21 @@
 <div class="question-edit-main">
-	<div>
-		<div class="input-block">
-			<label for="q-title">{{'TITLE' | translate}}:</label>
-			<input type="text" name="title" id="q-title" ng-model="element.title" required>
-		    <div ng-show="editQestion.$submitted || editQestion.title.$touched" class="input-message">
-		      	<div ng-show="editQestion.title.$error.required">{{ 'MUST_BE_NOT_EMPTY'| translate }}</div>
-		    </div>
-	    </div>
-		<div class="input-block">
-			<label for="q-description">{{'DESCRIPTION' | translate}}:</label>
-			<textarea ng-model="element.description" name="description" id="q-description"></textarea>
-	    </div>
-	</div>
+    <div>
+        <div class="input-block">
+            <label for="q-title">{{'TITLE'| translate}}:</label>
+            <input type="text" name="title" id="q-title" ng-model="element.title" required>
+            <div ng-show="editQestion.$submitted || editQestion.title.$touched" class="input-message">
+                <div ng-show="editQestion.title.$error.required">{{ 'MUST_BE_NOT_EMPTY'| translate }}</div>
+            </div>
+        </div>
+        <div class="input-block">
+            <label for="q-description">{{'DESCRIPTION'| translate}}:</label>
+            <textarea ng-model="element.description" name="description" id="q-description"></textarea>
+        </div>
+    </div>
 </div>
 <div class="question-edit-sidebar">
-	<div>
-		<div class="sidebar-title">{{ 'SETTINGS' | translate }}:</div>
-		<input type="checkbox" id="checkbox-1-1" class="regular-checkbox" ng-model="element.show_title" /><label for="checkbox-1-1"></label><label for="checkbox-1-1">{{ 'SHOW_TITLE' | translate }}</label>
-	</div>
+    <div>
+        <div class="sidebar-title">{{ 'SETTINGS' | translate }}:</div>
+        <input type="checkbox" id="checkbox-1-1" class="regular-checkbox" ng-model="element.show_title" /><label for="checkbox-1-1"></label><label for="checkbox-1-1">{{ 'SHOW_TITLE' | translate }}</label>
+    </div>
 </div>

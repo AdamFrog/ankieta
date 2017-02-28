@@ -1,4 +1,4 @@
-mfpoll_app.controller('EditController', function ($scope, $routeParams, $location, Question) {
+mfpoll_app.controller('EditController', function ($scope, $routeParams, $location, $sce, Question) {
 
     $scope.config = MFPOLL_CONFIG;
 
@@ -8,6 +8,7 @@ mfpoll_app.controller('EditController', function ($scope, $routeParams, $locatio
         stop: function (event, ui) {},
         placeholder: "sortable-placeholder",
         connectWith: '.sortable-list',
+        handle: ".handle-question",
         start: function (e, ui) {
             ui.placeholder.height(ui.item.outerHeight());
         }
@@ -18,6 +19,7 @@ mfpoll_app.controller('EditController', function ($scope, $routeParams, $locatio
         stop: function (event, ui) {},
         placeholder: "sortable-placeholder",
         connectWith: '.sortable-page',
+        handle: ".handle-page",
         start: function (e, ui) {
             ui.placeholder.height(ui.item.outerHeight());
         }
@@ -60,7 +62,7 @@ mfpoll_app.controller('EditController', function ($scope, $routeParams, $locatio
     };
    
     /**
-     * To proste po prostu kopiowanie pytań
+     * To proste, kopiowanie pytań
      * 
      * @param model question
      * @param int page
@@ -77,15 +79,32 @@ mfpoll_app.controller('EditController', function ($scope, $routeParams, $locatio
     };
     
     /**
+     * Pobiera html pytania
+     */
+    $scope.get_html = function (page, index) {
+        var question = $scope.questions[page][index];
+        Question.get_html(question, function($response){
+            var index = $scope.questions[page].indexOf(question);
+            $scope.questions[page][index].html = $response.data.html;
+            $scope.get_html(0, index + 1);
+        });
+    };
+    
+    /**
      * Tu bedzie zapisywanie jakis ajax do api
      * @returns {undefined}
      */
     $scope.save_forms = function () {
         // AJAX do zapisu
-
-        console.log($scope.questions);
+        var model = angular.copy($scope.questions);
+        Question.saveForms(model, function($response){
+        });
+        //console.log($scope.questions);
     };
     
+    $scope.to_trusted = function(html_code) {
+        return $sce.trustAsHtml(html_code);	
+    }
     /**
      * Funkcja ustawia dane wejsciowo-testowe
      */
@@ -109,7 +128,7 @@ mfpoll_app.controller('EditController', function ($scope, $routeParams, $locatio
             'answers': [{}, {}],
         };*/
         
-        for (var i = 0; i < 100; i++) {
+        for (var i = 0; i < 10; i++) {
             $scope.questions[0][i] = {
                 'title': 'questions 2',
                 'description': 'Opis',
@@ -118,11 +137,11 @@ mfpoll_app.controller('EditController', function ($scope, $routeParams, $locatio
             };
         }
         
-        for (var i = 0; i < 100; i++) {
+        /*for (var i = 0; i < 100; i++) {
             Question.get_html([], function($response){
                 $scope.questions[0][i].html = $response.data.html;
             });
-        }
+        }*/
         
         /*Question.get_html([], function($response){
             $scope.questions[0][1].html = $response.data.html;
@@ -133,6 +152,7 @@ mfpoll_app.controller('EditController', function ($scope, $routeParams, $locatio
 
     };
     init();
+    $scope.get_html(0,0);
 
 });
 
@@ -146,11 +166,8 @@ mfpoll_app.component('questionEdit', {
         if ($scope.element == undefined) {
             $scope.element = {};
         }
-        
         //Schowanie okienka
         $scope.visible = false;    
-
-
         var ctrl = this;
 
         //Obserwator ktory otwiera okno
@@ -201,9 +218,11 @@ mfpoll_app.component('questionEdit', {
                 $scope.visible = false;
 
                 //Przypisanie wartosci do modelu
+                //ctrl.question[key] = angular.copy($scope.element)
                 angular.forEach($scope.element, function (value, key) {
                     ctrl.question[key] = value;
                 });
+                
                 console.log(ctrl.question);
             });
             
