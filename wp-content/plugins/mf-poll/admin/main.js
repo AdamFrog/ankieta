@@ -6,7 +6,8 @@ var mfpoll_app = angular.module('mfpoll', ['ngRoute', 'pascalprecht.translate', 
 /**
  * Bootstrap
  */
-mfpoll_app.config(function ($routeProvider, $locationProvider, $translateProvider) {
+mfpoll_app.config(function ($routeProvider, $locationProvider, $translateProvider, $httpProvider) {
+    $httpProvider.defaults.cache = false;
     $routeProvider
     .when('/', {
         templateUrl: MFPOLL_CONFIG['plugin_url'] + 'admin/view/index.html',
@@ -74,11 +75,6 @@ mfpoll_app.filter('route', function() {
     };
 });
 
-mfpoll_app.run(function($rootScope, $templateCache) {
-   $rootScope.$on('$viewContentLoaded', function() {
-      $templateCache.removeAll();
-   });
-});
 
 var param = function (obj) {
     var query = '', name, value, fullSubName, subName, subValue, innerObj, i;
@@ -92,6 +88,7 @@ var param = function (obj) {
                 fullSubName = name + '[' + i + ']';
                 innerObj = {};
                 innerObj[fullSubName] = subValue;
+                console.log(subValue);
                 query += param(innerObj) + '&';
             }
         } else if (value instanceof Object) {
@@ -109,14 +106,16 @@ var param = function (obj) {
 };
 
 jQuery(window).scroll(function() {
-    var navbar = jQuery('body').find('#questions-list-navbar');
-    var window_scroll = jQuery(window).scrollTop();
+        var navbar = jQuery('body').find('#questions-list-navbar');
+    if(navbar.length > 0){ 
+        var window_scroll = jQuery(window).scrollTop();
 
-    if(navbar.offset().top - 32 < window_scroll){
-        navbar.addClass('fly');
-        navbar.find('#navbar').css({position: 'fixed', top: '32px', left: 'auto', width: navbar.width()});
-    }else{
-        navbar.addClass('fly');
-        navbar.find('#navbar').css({position: 'absolute', top: '0px'});
+        if(navbar.offset().top - 32 < window_scroll){
+            navbar.addClass('fly');
+            navbar.find('#navbar').css({position: 'fixed', top: '32px', left: 'auto', width: navbar.width()});
+        }else{
+            navbar.addClass('fly');
+            navbar.find('#navbar').css({position: 'absolute', top: '0px'});
+        }
     }
 });

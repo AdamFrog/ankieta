@@ -14,12 +14,12 @@ class MFPModel{
 	
 	public static function factory($name){
 
-		$file =  MFPPATH . 'model/' . strtolower($name). '.php';
-
+		$file =  MFPPATH . '/model/' . strtolower($name). '.php';
+               
 		if(file_exists($file)){
 			require_once($file);
 		}
-		$model = MFPPATH . 'Model_'. ucfirst(strtolower($name));
+		$model = 'MFPModel_'. ucfirst(strtolower($name));
 		return new $model;
 
 	}

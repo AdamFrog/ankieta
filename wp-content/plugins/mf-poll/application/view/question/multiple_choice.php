@@ -7,14 +7,13 @@
     <?php if(count($answers) != 0){ ?>
         <?php foreach ($answers as $key => $answer) { ?>
             <li>
-                <input type="radio" id="radio-1-<?= $key ?>" class="regular-radio" name="q[1][response]" value="<?php echo $answer['title'];?>"/>
-                <label for="radio-1-<?= $key ?>"></label>
-                <label for="radio-1-<?= $key ?>"><?php echo $answer['title'];?></label>
+                <input type="checkbox" id="checkbox-1-<?= $key ?>" class="regular-checkbox" name="q[1][response][<?= $key ?>]" value="<?= $key ?>"/>
+                <label for="checkbox-1-<?= $key ?>"></label>
+                <label for="checkbox-1-<?= $key ?>"><?php echo $answer['title'];?></label>
             </li>
         <?php } ?>
     <?php }else{ ?> 
         <li><?php echo __('Please add answer!', 'mfpoll') ?></li>
     <?php } ?>
-        
     </ul>
 </div>

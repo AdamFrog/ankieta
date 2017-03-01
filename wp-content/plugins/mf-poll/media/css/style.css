@@ -541,6 +541,26 @@ input[type="radio"].regular-radio {
     z-index: 999999 !important; }
 
 /* END PODSTAWOWA ANIMACJA */
+/* Ladowanie pytan loading */
+#poststuff.load #questions-list, #poststuff.load .button {
+  display: none; }
+#poststuff.load .loader-bar {
+  text-align: center;
+  margin: 20px 0px; }
+  #poststuff.load .loader-bar > span {
+    text-align: left;
+    padding: 1px;
+    box-sizing: border-box;
+    display: inline-block;
+    width: 90%;
+    height: 20px;
+    border: 1px solid #0065B3;
+    background-color: white; }
+    #poststuff.load .loader-bar > span > span {
+      display: inline-block;
+      height: 16px;
+      background-color: rgba(0, 101, 179, 0.1); }
+
 /* SORTOWANIE PYTA┼â */
 #questions-list .question-title {
   display: none; }

@@ -12,6 +12,7 @@ define('MFPPREFIX', 'MFP');
 // Załadowanie woprdressa
 require_once str_replace('wp-content\plugins\mf-poll\application', '', MFPPATH) . 'wp-load.php';
 require_once MFPPATH . '/system/view.php';
+require_once MFPPATH . '/system/model.php';
 
 // Autoloader controllerów i modeli
 spl_autoload_register(function ($class) {
@@ -20,9 +21,6 @@ spl_autoload_register(function ($class) {
     switch ($type) {
         case MFPPREFIX . 'Controller':
             require_once MFPPATH . '/controller/' . strtolower(end($aExlode)) . '.php';
-            break;
-        case MFPPREFIX . 'Model':
-            require_once MFPPATH . '/model/' . strtolower(end($aExlode)) . '.php';
             break;
     }
 });

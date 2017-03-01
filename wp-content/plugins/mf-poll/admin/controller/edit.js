@@ -1,6 +1,6 @@
-mfpoll_app.controller('EditController', function ($scope, $routeParams, $location, $sce, Question) {
+mfpoll_app.controller('EditController', function ($scope, $routeParams, $location, $sce, Question, Poll) {
 
-    $scope.config = MFPOLL_CONFIG;
+    $scope.config = MFPOLL_CONFIG;    
 
     $scope.sortableOptions = {
         update: function (e, ui) {},
@@ -28,8 +28,19 @@ mfpoll_app.controller('EditController', function ($scope, $routeParams, $locatio
     $scope.name = 'EditController';
     $scope.params = $routeParams;
     $scope.editing_elem = null;
-
     $scope.questions = [[]];
+    $scope.loading_width = 0;
+    
+    
+    Poll.get($scope.params.id, function(data){
+        console.log(data);
+        $scope.title = data.title;
+        $scope.questions[0] = data.questions;
+        console.log($scope.questions);
+        $scope.get_html(0,0);
+    });
+    
+    
     
     /**
      * Ustawia element edytowany dzieki czemu w oknie z edycja pytanie wyswietli mi 
@@ -83,10 +94,12 @@ mfpoll_app.controller('EditController', function ($scope, $routeParams, $locatio
      */
     $scope.get_html = function (page, index) {
         var question = $scope.questions[page][index];
+        
         Question.get_html(question, function($response){
             var index = $scope.questions[page].indexOf(question);
             $scope.questions[page][index].html = $response.data.html;
             $scope.get_html(0, index + 1);
+            $scope.loading_width = index * 10;
         });
     };
     
@@ -96,8 +109,15 @@ mfpoll_app.controller('EditController', function ($scope, $routeParams, $locatio
      */
     $scope.save_forms = function () {
         // AJAX do zapisu
-        var model = angular.copy($scope.questions);
-        Question.saveForms(model, function($response){
+        var model = {
+            title: $scope.title,
+            poll_id: $scope.params.id,
+            questions: $scope.questions,
+        };
+        Poll.save(model, function($response){
+            console.log($response);
+            alert('zmiany zostaly zapisane');
+            
         });
         //console.log($scope.questions);
     };
@@ -105,55 +125,7 @@ mfpoll_app.controller('EditController', function ($scope, $routeParams, $locatio
     $scope.to_trusted = function(html_code) {
         return $sce.trustAsHtml(html_code);	
     }
-    /**
-     * Funkcja ustawia dane wejsciowo-testowe
-     */
-    var init = function () {
-        /*$scope.questions[0][0] = {
-            'title': 'questions 1',
-            'description': 'Opis',
-            'type': 'text',
-            'show_title': true,
-        };
-        $scope.questions[0][1] = {
-            'title': 'questions 2',
-            'description': 'Opis',
-            'type': 'text',
-            'show_title': false,
-        };
-        $scope.questions[0][2] = {
-            'title': 'Single Choice',
-            'description': 'Opis',
-            'type': 'single_choice',
-            'answers': [{}, {}],
-        };*/
-        
-        for (var i = 0; i < 10; i++) {
-            $scope.questions[0][i] = {
-                'title': 'questions 2',
-                'description': 'Opis',
-                'type': 'text',
-                'show_title': false,
-            };
-        }
-        
-        /*for (var i = 0; i < 100; i++) {
-            Question.get_html([], function($response){
-                $scope.questions[0][i].html = $response.data.html;
-            });
-        }*/
-        
-        /*Question.get_html([], function($response){
-            $scope.questions[0][1].html = $response.data.html;
-        });
-        Question.get_html([], function($response){
-            $scope.questions[0][2].html = $response.data.html;
-        });*/
-
-    };
-    init();
-    $scope.get_html(0,0);
-
+    
 });
 
 /**

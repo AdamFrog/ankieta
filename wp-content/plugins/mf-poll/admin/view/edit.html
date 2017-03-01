@@ -1,5 +1,5 @@
 <h1>{{ 'EDIT_POLL' | translate }}<a class="page-title-action" ng-href="{{ '#/' | route }}">{{ 'LIST' | translate }}</a></h1>
-<div id="poststuff">
+<div id="poststuff" class="load1">
     <form name="addform">
         <div id="titlediv">
             <div id="titlewrap">
@@ -9,7 +9,12 @@
             </div>
         </div>
     </form>
-    <div id="questions-list">
+    <div class="loader-bar">
+        <span>
+            <span style="width:{{loading_width}}%;"></span>
+        </span>
+    </div>
+    <div id="questions-list" >
         <div id="questions-list-navbar">
             <div id="navbar">
                 <button class="button" ng-click="sort_question = !sort_question" ng-init="sort_question=false" ng-disabled="sort_page">{{ 'SORT_QUESTION' | translate }}</button>
