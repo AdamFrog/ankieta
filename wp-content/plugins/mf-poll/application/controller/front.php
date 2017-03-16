@@ -102,7 +102,7 @@ class MFPController_Front {
             wp_redirect('/wordpress/ankieta/'.$poll_id);
         }else if($page > $_SESSION['poll'][$poll_id]['page'] && $page != 1){
             wp_redirect('/wordpress/ankieta/'.$poll_id.'/strona/' . $_SESSION['poll'][$poll_id]['page']);
-        }
+        } 
      
         $questions = MFPModel::factory('Question')->find_all('poll_id', '=', $poll_id, ' AND `page` = ' . $page);
         $questions_array = array();
