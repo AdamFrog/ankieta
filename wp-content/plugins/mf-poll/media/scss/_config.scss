@@ -11,3 +11,15 @@ and open the template in the editor.
 $color-primary: #0065B3;
 $opacity-primary: rgba(0, 101, 179, 0.1);
 $light-grey: rgba(0,0,0,0.2);
+$very-light-grey: rgba(0,0,0,0.05);
+$text-color: #666666;
+$font-stack: 'Roboto', sans-serif;
+$error-color: #B21F21;
+
+$grid-columns: 12;
+
+//MIXINS
+@mixin col-width($width) {
+    width: 100% / $width;
+}
+//END MIXINS

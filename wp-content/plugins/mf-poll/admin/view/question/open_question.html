@@ -17,10 +17,18 @@
     <div>
         <div class="sidebar-title">{{ 'SETTINGS' | translate }}:</div>
         <div class="input-checkbox">
-            <input type="checkbox" id="q-show-title" class="regular-checkbox" ng-model="element.show_title" /><label for="q-show-title"></label><label for="q-show-title">{{ 'SHOW_TITLE' | translate }}</label>
+            <input ng-false-value="0" ng-true-value="1" type="checkbox" id="q-show-title" class="regular-checkbox" ng-model="element.options.show_title" /><label for="q-show-title"></label><label for="q-show-title">{{ 'SHOW_TITLE' | translate }}</label>
         </div>
         <div class="input-checkbox">
-            <input type="checkbox" id="q-require" class="regular-checkbox" name="require" ng-model="element.require" /><label for="q-require"></label><label for="q-require">{{ 'QUESTION_IS_REQUIRE' | translate }}</label>
+            <input ng-false-value="0" ng-true-value="1" type="checkbox" id="q-require" class="regular-checkbox" name="require" ng-model="element.options.require" /><label for="q-require"></label><label for="q-require">{{ 'QUESTION_IS_REQUIRE' | translate }}</label>
+        </div>
+        <div class="input-text numeric">
+            {{ 'MINIMUM_TEXT_LENGTH' | translate }}:<br/>
+            <input type="text" ng-model="element.options.text_min"/>
+        </div>
+        <div class="input-text numeric">
+            {{ 'MAXIMUM_TEXT_LENGTH' | translate }}:<br/>
+            <input type="text" ng-model="element.options.text_max"/>
         </div>
     </div>
 </div>

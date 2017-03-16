@@ -19,4 +19,9 @@ class MFPModel_Question extends MFPModel {
         parent::__construct();
     }
     
+    public function get_count_page($poll_id){
+        $result = $this->db->query("SELECT count(*) FROM {$this->db->prefix}{$this->table_name} WHERE `poll_id` = {$poll_id} GROUP BY `page`");
+
+        return $result;
+    }
 }

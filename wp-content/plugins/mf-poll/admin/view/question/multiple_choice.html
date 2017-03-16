@@ -13,15 +13,17 @@
         </div>
         <div class="answers-block">
             <span class="answer-block-title">{{ 'ANSWERS' | translate }}:</span>
-            <div class="input-block" ng-repeat="(key, answer) in element.answers">
-                <span class="counter">{{key + 1}}.</span>
-                <input type="text" name="answer{{key}}" id="q-answer-{{key}}" ng-model="answer.title" required>
-                <div ng-show="editQuestion.$submitted || editQuestion['answer' + key].$touched" class="input-message">
-                    <div ng-show="editQuestion['answer' + key].$error.required">{{ 'ENTER_THE_CORRECT_OR_DELETE_ANSWER'| translate }}</div>
+            <div class="sortable" ui-sortable="{axis: 'y', handle: '.counter'}" ng-model="element.answers">
+                <div class="input-block" ng-repeat="(key, answer) in element.answers">
+                    <span class="counter">{{key + 1}}.</span>
+                    <input type="text" name="answer{{key}}" id="q-answer-{{key}}" ng-model="answer.title" required>
+                    <div ng-show="editQuestion.$submitted || editQuestion['answer' + key].$touched" class="input-message">
+                        <div ng-show="editQuestion['answer' + key].$error.required">{{ 'ENTER_THE_CORRECT_OR_DELETE_ANSWER'| translate }}</div>
+                    </div>
+                    <span ng-click="delete_answer(answer)" class="delete-answer fa fa-remove" aria-hidden="true"></span>
                 </div>
-                <span ng-click="delete_answer(answer)" class="delete-answer fa fa-remove" aria-hidden="true"></span>
+                <span class="button" ng-click="add_answer()">{{ 'ADD_ANSWER' | translate }}</span>
             </div>
-            <span class="button" ng-click="add_answer()">{{ 'ADD_ANSWER' | translate }}</span>
         </div>
     </div>
 </div>
@@ -29,13 +31,27 @@
     <div>
         <div class="sidebar-title">{{ 'SETTINGS' | translate }}:</div>
         <div class="input-checkbox">
-            <input type="checkbox" id="checkbox-1-1" class="regular-checkbox" ng-model="element.show_title" /><label for="checkbox-1-1"></label><label for="checkbox-1-1">{{ 'SHOW_TITLE' | translate }}</label>
+            <input type="checkbox" ng-false-value="0" ng-true-value="1" id="q-show-title" class="regular-checkbox" ng-model="element.options.show_title" /><label for="q-show-title"></label><label for="q-show-title">{{ 'SHOW_TITLE' | translate }}</label>
         </div>
         <div class="input-checkbox">
-            <input type="checkbox" id="q-require" class="regular-checkbox" name="require" ng-model="element.require" /><label for="q-require"></label><label for="q-require">{{ 'QUESTION_IS_REQUIRE' | translate }}</label>
+            <input type="checkbox" ng-false-value="0" ng-true-value="1" id="q-require" class="regular-checkbox" name="require" ng-model="element.options.require" /><label for="q-require"></label><label for="q-require">{{ 'QUESTION_IS_REQUIRE' | translate }}</label>
         </div>
         <div class="input-checkbox">
-            <input type="checkbox" id="q-require-other-answer" class="regular-checkbox" name="require_other_answer" ng-model="element.require_other_answer" /><label for="q-require-other-answer"></label><label for="q-require-other-answer">{{ 'REQUIRED_ENTER_OTHER_ANSWER' | translate }}</label>
+            <input type="checkbox" ng-false-value="0" ng-true-value="1" id="q-require-other-answer" class="regular-checkbox" name="require_other_answer" ng-model="element.options.require_other_answer" /><label for="q-require-other-answer"></label><label for="q-require-other-answer">{{ 'REQUIRED_ENTER_OTHER_ANSWER' | translate }}</label>
+        </div>
+        <div class="input-select">
+            {{ 'MINIMUM_SELECT' | translate }}:
+            <select ng-model="element.options.min">
+                <option value="">
+                <option value="{{key + 1}}" ng-repeat="(key, answer) in element.answers">{{key + 1}}</option>
+            </select>
+        </div>
+        <div class="input-select">
+            {{ 'MAXIMUM_SELECT' | translate }}:
+            <select ng-model="element.options.max">
+                <option value="">
+                <option value="{{key + 1}}" ng-repeat="(key, answer) in element.answers">{{key + 1}}</option>
+            </select>
         </div>
     </div>
 </div>

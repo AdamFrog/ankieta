@@ -16,9 +16,8 @@ class MFPController_Question extends MFPController_Index{
     
 
     public function action_index(){
-        //print_r($_POST);
         
-        $result = ['sdads' => 'dasdsa', 'html' => MFPView::render('question/'. $_POST['type'], $_POST)];
+        $result = ['html' => MFPView::render('question/'. $_POST['type'], $_POST)];
         
         $this->sendJson($result);
         

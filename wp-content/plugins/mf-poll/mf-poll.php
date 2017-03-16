@@ -70,6 +70,11 @@ function mf_admin_head_poll() {?>
         'QUESTION_FOR_NUMBER': '<?= __('Question for number', 'mfpoll') ?>',
         'QUESTION_OF_THE_DATE': '<?= __('Question of the date', 'mfpoll') ?>',
         'QUESTION_OF_EMAIL': '<?= __('Question of email', 'mfpoll') ?>',
+        'OPENS': '<?= __('Opens', 'mfpoll') ?>',
+        'REJECT': '<?= __('Reject', 'mfpoll') ?>',
+        'ENDS': '<?= __('Ends', 'mfpoll') ?>',
+        'QUESTIONS_STATS': '<?= __('Questions stats', 'mfpoll') ?>',
+        'PAGE': '<?= __('Page', 'mfpoll') ?>',
     };
     var MFPOLL_CONFIG = {
         'url': '<?= get_site_url() ?>',
@@ -117,9 +122,11 @@ function mf_media_poll() {
     wp_enqueue_script( 'admin_js_mfpoll', plugin_dir_url( __FILE__ ) . 'admin/main.js', false, '1.0.0', true);
     wp_enqueue_script( 'admin_js_mfpoll_service_poll', plugin_dir_url( __FILE__ ) . 'admin/service/poll.js', false, '1.0.0', true);
     wp_enqueue_script( 'admin_js_mfpoll_service_question', plugin_dir_url( __FILE__ ) . 'admin/service/question.js', false, '1.0.0', true);
+    wp_enqueue_script( 'admin_js_mfpoll_service_summary', plugin_dir_url( __FILE__ ) . 'admin/service/summary.js', false, '1.0.0', true);
     wp_enqueue_script( 'admin_js_main_mfpoll', plugin_dir_url( __FILE__ ) . 'admin/controller/main.js', false, '1.0.0', true);
     wp_enqueue_script( 'admin_js_add_mfpoll', plugin_dir_url( __FILE__ ) . 'admin/controller/add.js', false, '1.0.0', true);
     wp_enqueue_script( 'admin_js_edit_mfpoll', plugin_dir_url( __FILE__ ) . 'admin/controller/edit.js', false, '1.0.0', true);
+    wp_enqueue_script( 'admin_js_summary_mfpoll', plugin_dir_url( __FILE__ ) . 'admin/controller/summary.js', false, '1.0.0', true);
 }
 
 /**
@@ -140,3 +147,11 @@ function mf_init_poll(){?>
     <?php
 }
 add_action( 'wp_ajax_poll', 'mf_init_poll' );
+
+
+function mfp_add_rewrite_rule() {
+  add_rewrite_rule('^ankieta/([0-9]+)/strona/([0-9]+)/?', 'wp-content/plugins/mf-poll/application/bootstrap.php?controller=front&action=index&poll_id=$1&page=$2', 'top');
+  add_rewrite_rule('^ankieta/([0-9]+)/podziekowanie/?', 'wp-content/plugins/mf-poll/application/bootstrap.php?controller=front&action=save&poll_id=$1', 'top');
+  add_rewrite_rule('^ankieta/([0-9]+)/?', 'wp-content/plugins/mf-poll/application/bootstrap.php?controller=front&action=index&poll_id=$1', 'top');
+}
+add_action('init', 'mfp_add_rewrite_rule');

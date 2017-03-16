@@ -28,6 +28,13 @@ mfpoll_app.config(function ($routeProvider, $locationProvider, $translateProvide
     .when('/edit/:id', {
         templateUrl: MFPOLL_CONFIG['plugin_url'] + 'admin/view/edit.html',
         controller: 'EditController'
+    })
+    .when('/summary/:id', {
+        templateUrl: MFPOLL_CONFIG['plugin_url'] + 'admin/view/summary.html',
+        controller: 'SummaryController'
+    })
+    .otherwise({
+        redirectTo: "/"
     });
 
     $translateProvider.translations('en', mf_i18n);
@@ -75,6 +82,17 @@ mfpoll_app.filter('route', function() {
     };
 });
 
+mfpoll_app.filter('range', function() {
+  return function(input, total) {
+    total = parseInt(total);
+
+    for (var i=0; i<total; i++) {
+      input.push(i);
+    }
+
+    return input;
+  };
+});
 
 var param = function (obj) {
     var query = '', name, value, fullSubName, subName, subValue, innerObj, i;
@@ -104,6 +122,7 @@ var param = function (obj) {
     }
     return query.length ? query.substr(0, query.length - 1) : query;
 };
+
 
 jQuery(window).scroll(function() {
         var navbar = jQuery('body').find('#questions-list-navbar');

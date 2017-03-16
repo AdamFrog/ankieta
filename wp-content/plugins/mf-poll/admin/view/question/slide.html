@@ -1,0 +1,55 @@
+<div class="question-edit-main">
+    <div>
+        <div class="input-block">
+            <label for="q-title">{{'CONTENT_OF_QUESTION'| translate}}:</label>
+            <textarea type="text" name="title" id="q-title" ng-model="element.title" required></textarea>
+            <div ng-show="editQuestion.$submitted || editQuestion.title.$touched" class="input-message">
+                <div ng-show="editQuestion.title.$error.required">{{ 'MUST_BE_NOT_EMPTY'| translate }}</div>
+            </div>
+        </div>
+        <div class="input-block">
+            <label for="q-description">{{'DESCRIPTION'| translate}}:</label>
+            <textarea ng-model="element.description" name="description" id="q-description"></textarea>
+        </div>
+       
+    </div>
+</div>
+<div class="question-edit-sidebar">
+    <div>
+        <div class="sidebar-title">{{ 'SETTINGS' | translate }}:</div>
+        <div class="input-checkbox">
+            <input type="checkbox" ng-false-value="0" ng-true-value="1" id="checkbox-singlechoice-show-title" class="regular-checkbox" ng-model="element.options.show_title" /><label for="checkbox-singlechoice-show-title"></label><label for="checkbox-singlechoice-show-title">{{ 'SHOW_TITLE' | translate }}</label>
+        </div>
+        <div class="input-checkbox">
+            <input type="checkbox" ng-false-value="0" ng-true-value="1" id="q-require" class="regular-checkbox" name="require" ng-model="element.options.require" /><label for="q-require"></label><label for="q-require">{{ 'QUESTION_IS_REQUIRE' | translate }}</label>
+        </div>
+        <div class="input-checkbox">
+            <input type="checkbox" ng-false-value="0" ng-true-value="1" id="q-require-other-answer" class="regular-checkbox" name="require_other_answer" ng-model="element.options.require_other_answer" /><label for="q-require-other-answer"></label><label for="q-require-other-answer">{{ 'REQUIRED_ENTER_OTHER_ANSWER' | translate }}</label>
+        </div>
+        <div class="input-text">
+            <label for="q-text-left">{{ 'TEXT_LEFT' | translate }}</label>
+            <input type="text" id="q-text-left" name="text_left" ng-model="element.options.text_left" />
+        </div>
+        <div class="input-text">
+            <label for="q-text-right">{{ 'TEXT_RIGHT' | translate }}</label>
+            <input type="text" id="q-text-right" name="text_right" ng-model="element.options.text_right" />
+        </div>
+        <div class="input-select">
+            {{ 'RANGE' | translate }}:
+            <select ng-model="element.options.range">
+                <option value="100">100</option>
+                <option value="21">21</option>
+                <option value="11">11</option>
+                <option value="10">10</option>
+                <option value="9">9</option>
+                <option value="8">8</option>
+                <option value="7">7</option>
+                <option value="6">6</option>
+                <option value="5">5</option>
+                <option value="4">4</option>
+                <option value="3">3</option>
+                <option value="2">2</option>
+            </select>
+        </div>
+    </div>
+</div>

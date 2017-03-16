@@ -1,0 +1,64 @@
+<div class="question-edit-main">
+    <div>
+        <div class="input-block">
+            <label for="q-title">{{'TITLE'| translate}}:</label>
+            <input type="text" name="title" id="q-title" ng-model="element.title" required>
+            <div ng-show="editQestion.$submitted || editQestion.title.$touched" class="input-message">
+                <div ng-show="editQestion.title.$error.required">{{ 'MUST_BE_NOT_EMPTY'| translate }}</div>
+            </div>
+        </div>
+        <div class="textarea-block">
+            <label for="q-description">{{'DESCRIPTION'| translate}}:</label>
+            <textarea ng-model="element.description" name="description" id="q-description"></textarea>
+        </div>
+    </div>
+</div>
+<div class="question-edit-sidebar">
+    <div>
+        <div class="sidebar-title">{{ 'SETTINGS' | translate }}:</div>
+        <div class="input-checkbox">
+            <input ng-false-value="0" ng-true-value="1" type="checkbox" id="q-show-title" class="regular-checkbox" ng-model="element.options.show_title" /><label for="q-show-title"></label><label for="q-show-title">{{ 'SHOW_TITLE' | translate }}</label>
+        </div>
+        <div class="input-checkbox">
+            <input ng-false-value="0" ng-true-value="1" type="checkbox" id="q-require" class="regular-checkbox" name="require" ng-model="element.options.require" /><label for="q-require"></label><label for="q-require">{{ 'QUESTION_IS_REQUIRE' | translate }}</label>
+        </div>
+        <div class="input-checkbox-area">
+            <span>{{ 'ACCEPTED_FILE' | translate }}:</span><br/>
+            <span><input ng-false-value="0" ng-true-value="1" type="checkbox" class="regular-checkbox" name="q-jpg" name="jpg" ng-model="element.options.formats.jpg" ng-checked="element.options.formats.jpg == '1'"/><label for="q-jpg"></label><label for="q-jpg">{{ 'JPG' | translate }}</label></span>
+            <span><input ng-false-value="0" ng-true-value="1" type="checkbox" class="regular-checkbox" name="q-png" ng-model="element.options.formats.png"/><label for="q-png"></label><label for="q-png">{{ 'PNG' | translate }}</label></span>
+            <span><input ng-false-value="0" ng-true-value="1" type="checkbox" class="regular-checkbox" name="q-gif" ng-model="element.options.formats.gif"/><label for="q-gif"></label><label for="q-gif">{{ 'GIF' | translate }}</label></span>
+            <span><input ng-false-value="0" ng-true-value="1" type="checkbox" class="regular-checkbox" name="q-doc" ng-model="element.options.formats.doc"/><label for="q-doc"></label><label for="q-doc">{{ 'DOC' | translate }}</label></span>
+            <span><input ng-false-value="0" ng-true-value="1" type="checkbox" class="regular-checkbox" name="q-xls" ng-model="element.options.formats.xls"/><label for="q-xls"></label><label for="q-xls">{{ 'XLS' | translate }}</label></span>
+            <span><input ng-false-value="0" ng-true-value="1" type="checkbox" class="regular-checkbox" name="q-csv" ng-model="element.options.formats.csv"/><label for="q-csv"></label><label for="q-csv">{{ 'CSV' | translate }}</label></span>
+            <span><input ng-false-value="0" ng-true-value="1" type="checkbox" class="regular-checkbox" name="q-ppt" ng-model="element.options.formats.ppt"/><label for="q-ppt"></label><label for="q-ppt">{{ 'PPT' | translate }}</label></span>
+            <span><input ng-false-value="0" ng-true-value="1" type="checkbox" class="regular-checkbox" name="q-zip" ng-model="element.options.formats.zip"/><label for="q-zip"></label><label for="q-zip">{{ 'ZIP' | translate }}</label></span>
+            <span><input ng-false-value="0" ng-true-value="1" type="checkbox" class="regular-checkbox" name="q-rar" ng-model="element.options.formats.rar"/><label for="q-rar"></label><label for="q-rar">{{ 'RAR' | translate }}</label></span>
+            <span><input ng-false-value="0" ng-true-value="1" type="checkbox" class="regular-checkbox" name="q-mp3" ng-model="element.options.formats.mp3"/><label for="q-mp3"></label><label for="q-mp3">{{ 'MP3' | translate }}</label></span>
+        </div>
+        <div class="input-select">
+            {{ 'MAXIMUM_WEIGHT_FILE' | translate }}:
+            <select ng-model="element.options.max_size">
+                <option value="1">1mb</option>
+                <option value="2">2mb</option>
+                <option value="3">3mb</option>
+                <option value="4">4mb</option>
+                <option value="5">5mb</option>
+            </select>
+        </div>
+        <div class="input-select">
+            {{ 'FILE_COUNT' | translate }}:
+            <select ng-model="element.options.max_count">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
+        </div>
+    </div>
+</div>

@@ -1,2 +1,43 @@
-<h1>{{ 'POLL_LIST' | translate }}<a class="page-title-action" href="#add">{{ 'NEW' | translate }}</a></h1>
-<div ng-include="menu"></div>
+<div ng-show="page_load" class="preloader preloader-big">
+    {{'LOADING'|translate}}...
+</div>
+<div ng-if="!page_load" class="slide-animate">
+    <h1>{{ 'POLL_LIST' | translate }}<a class="page-title-action" href="#add">{{ 'NEW' | translate }}</a></h1>
+    <hr class="wp-header-end">
+    <ul class="subsubsub">
+        <li class="all"><a class="current">Wszystkie <span class="count">(1)</span></a> |</li>
+        <li class="publish"><a>Opublikowane <span class="count">(1)</span></a></li>
+    </ul>
+    <table class="wp-list-table widefat fixed striped posts">
+        <thead>
+            <tr>
+                <th>
+                    {{ 'TITLE' | translate }}
+                </th>
+                <th>
+                    {{ 'TYPE' | translate }}
+                </th>
+                <th>
+                    {{ 'STATUS' | translate }}
+                </th>
+                <th>
+                    {{ 'DATE_ADDED' | translate }}
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="poll in polls | orderBy:'-date_added'">
+                <td>
+                    <a href="#/edit/{{ poll.id }}">{{ poll.title }}</a>
+                    <div class="row-actions">
+                        <span><a href="#/edit/{{ poll.id }}">{{ 'EDIT' | translate}}</a> |</span>
+                        <span><a href="#/summary/{{ poll.id }}">{{ 'SUMMARY' | translate}}</a></span>
+                    </div>
+                </td>
+                <td>{{ poll.type }}</td>
+                <td>{{ poll.status }}</td>
+                <td>{{ 'PUBLICATE:'}}<br/>{{ poll.date_added }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,43 @@
+<table class="summary-table table-{{question.type}}" cellspacing="0">
+    <thead>
+        <tr>
+            <th class="text-center">
+            </th>
+            <th class="text-center" colspan="10">
+                {{'NPS'|translate}}
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="text-right">{{'SCALE'|translate}}</td>
+            <td class="text-center">1</td>
+            <td class="text-center">2</td>
+            <td class="text-center">3</td>
+            <td class="text-center">4</td>
+            <td class="text-center">5</td>
+            <td class="text-center">6</td>
+            <td class="text-center">7</td>
+            <td class="text-center">8</td>
+            <td class="text-center">9</td>
+            <td class="text-center">10</td>
+        </tr>
+        <tr>
+            <td class="text-right">{{'REPLY_COUNT'|translate}}</td>
+            <td class="text-center" >{{ getVar(result.items[1]) }}</td>
+            <td class="text-center" >{{ getVar(result.items[2]) }}</td>
+            <td class="text-center" >{{ getVar(result.items[3]) }}</td>
+            <td class="text-center" >{{ getVar(result.items[4]) }}</td>
+            <td class="text-center" >{{ getVar(result.items[5]) }}</td>
+            <td class="text-center" >{{ getVar(result.items[6]) }}</td>
+            <td class="text-center" >{{ getVar(result.items[7]) }}</td>
+            <td class="text-center" >{{ getVar(result.items[8]) }}</td>
+            <td class="text-center" >{{ getVar(result.items[9]) }}</td>
+            <td class="text-center" >{{ getVar(result.items[10]) }}</td>
+        </tr>
+        <tr>
+            <td class="text-right">{{'SUM'|translate}}</td>
+            <td class="text-center" colspan="10">{{ getVar(result.count)}}</td>
+        </tr>
+    </tbody>
+</table>

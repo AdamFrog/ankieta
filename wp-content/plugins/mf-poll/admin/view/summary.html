@@ -1,0 +1,36 @@
+<div ng-show="page_load" class="preloader preloader-big">
+    {{'LOADING'|translate}}...
+</div>
+<div ng-if="!page_load" class="slide-animate">
+    <h1>{{ poll.title }}<a class="page-title-action" href="#/">{{ 'LIST' | translate }}</a></h1>
+
+    <div id="summary">
+        <div class="clearfix summary-opens">
+            <ul>
+                <li>
+                    <span class="title"><span class="dashicons dashicons-businessman"></span>{{ 'OPENS' | translate }}</span>
+                    <span class="count">{{summary.count_users}}</span>
+                </li>
+                <li>
+                    <span class="title"><span class="dashicons dashicons-dismiss"></span>{{ 'REJECT' | translate }}</span>
+                    <span class="count">{{summary.count_users - summary.end}}</span>
+                </li>
+                <li>
+                    <span class="title"><span class="dashicons dashicons-yes"></span>{{ 'ENDS' | translate }}</span>
+                    <span class="count">
+                        <span class="end">{{summary.end}}</span>
+                    </span>
+                </li>
+            </ul>
+        </div>
+        <div class="rejection">
+            <div ng-repeat="(key, page) in poll.questions">
+                <h3 class="text-center">{{'PAGE' | translate}} {{key + 1}}</h3>
+                <div ng-repeat="question in page">
+                    <h4>{{question.id}}. {{question.title}}</h4>
+                    <question-summary question="question"></question-summary>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

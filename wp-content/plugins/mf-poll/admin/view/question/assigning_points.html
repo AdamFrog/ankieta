@@ -1,0 +1,44 @@
+<div class="question-edit-main">
+    <div>
+        <div class="input-block">
+            <label for="q-title">{{'CONTENT_OF_QUESTION'| translate}}:</label>
+            <textarea type="text" name="title" id="q-title" ng-model="element.title" required></textarea>
+            <div ng-show="editQuestion.$submitted || editQuestion.title.$touched" class="input-message">
+                <div ng-show="editQuestion.title.$error.required">{{ 'MUST_BE_NOT_EMPTY'| translate }}</div>
+            </div>
+        </div>
+        <div class="input-block">
+            <label for="q-description">{{'DESCRIPTION'| translate}}:</label>
+            <textarea ng-model="element.description" name="description" id="q-description"></textarea>
+        </div>
+        <div class="answers-block">
+            <span class="answer-block-title">{{ 'ANSWERS' | translate }}:</span>
+            <div class="sortable" ui-sortable="{axis: 'y', handle: '.counter'}" ng-model="element.answers">
+                <div class="input-block" ng-repeat="(key, answer) in element.answers">
+                    <span class="counter">{{key + 1}}.</span>
+                    <input type="text" name="answer{{key}}" id="q-answer-{{key}}" ng-model="answer.title" required>
+                    <div ng-show="editQuestion.$submitted || editQuestion['answer' + key].$touched" class="input-message">
+                        <div ng-show="editQuestion['answer' + key].$error.required">{{ 'ENTER_THE_CORRECT_OR_DELETE_ANSWER'| translate }}</div>
+                    </div>
+                    <span ng-click="delete_answer(answer)" class="delete-answer fa fa-remove" aria-hidden="true"></span>
+                </div>
+                <span class="button" ng-click="add_answer('option')">{{ 'ADD_OPTION' | translate }}</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="question-edit-sidebar">
+    <div>
+        <div class="sidebar-title">{{ 'SETTINGS' | translate }}:</div>
+        <div class="input-checkbox">
+            <input type="checkbox" ng-false-value="0" ng-true-value="1" id="checkbox-singlechoice-show-title" class="regular-checkbox" ng-model="element.options.show_title" /><label for="checkbox-singlechoice-show-title"></label><label for="checkbox-singlechoice-show-title">{{ 'SHOW_TITLE' | translate }}</label>
+        </div>
+        <div class="input-checkbox">
+            <input type="checkbox" ng-false-value="0" ng-true-value="1" id="q-require" class="regular-checkbox" name="require" ng-model="element.options.require" /><label for="q-require"></label><label for="q-require">{{ 'QUESTION_IS_REQUIRE' | translate }}</label>
+        </div>
+        <div class="input-text">
+            <label for="q-require">{{ 'POINTS' | translate }}</label>
+            <input type="text" id="q-points" name="points" ng-model="element.options.points" />
+        </div>
+    </div>
+</div>

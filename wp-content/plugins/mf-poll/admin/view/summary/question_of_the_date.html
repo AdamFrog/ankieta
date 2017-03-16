@@ -1,0 +1,23 @@
+<table class="summary-table table-{{question.type}}" cellspacing="0">
+    <thead>
+        <tr>
+            <th class="text-center">
+                {{'REPLY'|translate}}
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="text-center">{{ getVar(result) }}</td>
+        </tr>
+        <tr ng-repeat="row in reply.items">
+            <td>{{row.answer}}</td>
+        </tr>
+        <tr class="no-hover">
+            <td>
+            <button class="btn btn-load btn-primary" ng-click="getReply()" ng-class="{is_load: reply.load}">{{'LOAD_REPLY'|translate}}</button>
+            <span ng-show="reply.no_more_reply" class="message-color">{{'NOT_FOUND_MORE_REPLY' | translate}}</span>
+            </td>
+        </tr>
+    </tbody>
+</table>

@@ -1,11 +1,12 @@
 <?php
-
+//session_start();
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 require_once realpath(dirname(__FILE__)) . '/index.php';
+require_once realpath(dirname(__FILE__)) . '/config.php';
 
 if (isset($_GET['controller'])) {
     $name = ucfirst(strtolower($_GET['controller']));

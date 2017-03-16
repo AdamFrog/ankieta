@@ -1,11 +1,9 @@
 mfpoll_app.controller('EditController', function ($scope, $routeParams, $location, $sce, Question, Poll) {
-
+    $scope.page_load = true;
     $scope.config = MFPOLL_CONFIG;    
 
     $scope.sortableOptions = {
-        update: function (e, ui) {},
         axis: 'y',
-        stop: function (event, ui) {},
         placeholder: "sortable-placeholder",
         connectWith: '.sortable-list',
         handle: ".handle-question",
@@ -14,9 +12,7 @@ mfpoll_app.controller('EditController', function ($scope, $routeParams, $locatio
         }
     };
     $scope.sortableOptionsPage = {
-        update: function (e, ui) {},
         axis: 'y',
-        stop: function (event, ui) {},
         placeholder: "sortable-placeholder",
         connectWith: '.sortable-page',
         handle: ".handle-page",
@@ -24,7 +20,7 @@ mfpoll_app.controller('EditController', function ($scope, $routeParams, $locatio
             ui.placeholder.height(ui.item.outerHeight());
         }
     };
-
+    
     $scope.name = 'EditController';
     $scope.params = $routeParams;
     $scope.editing_elem = null;
@@ -33,14 +29,18 @@ mfpoll_app.controller('EditController', function ($scope, $routeParams, $locatio
     
     
     Poll.get($scope.params.id, function(data){
-        console.log(data);
         $scope.title = data.title;
-        $scope.questions[0] = data.questions;
-        console.log($scope.questions);
+        $scope.status = parseInt(data.status);
+        $scope.type = data.type;
+        $scope.ending = data.ending;
+        //Rzucenie do array
+        angular.forEach(data.questions, function(value, key) {
+            $scope.questions[key] = value;
+         });
+        console.log($scope);
         $scope.get_html(0,0);
+        $scope.page_load = false;
     });
-    
-    
     
     /**
      * Ustawia element edytowany dzieki czemu w oknie z edycja pytanie wyswietli mi 
@@ -49,14 +49,15 @@ mfpoll_app.controller('EditController', function ($scope, $routeParams, $locatio
      * @param model elem
      */
     $scope.set_edit_element = function (elem) {
+        
         $scope.editing_elem = elem;
     };
 
     $scope.save_modal_add_question = function (type, attrs) {
 
         $scope.questions[attrs.page][$scope.questions[attrs.page].length] = {
-            'title': 'questions 3',
-            'description': 'Opis',
+            'title': null,
+            'description': null,
             'type': type,
         };
     };
@@ -68,10 +69,14 @@ mfpoll_app.controller('EditController', function ($scope, $routeParams, $locatio
      * @param int page Wskazuje na ktorej stronie sie znajduje czyli numer pod tablicy
      */
     $scope.remove = function (question, page) {
-        var index = $scope.questions[page].indexOf(question)
-        $scope.questions[page].splice(index, 1);
+        var index = $scope.questions[page].indexOf(question);
+        $scope.questions[page][index].remove = 1;
     };
    
+    $scope.remove_page = function (page) {
+        var index = $scope.questions.indexOf(page);
+        $scope.questions.splice(index, 1);
+    };
     /**
      * To proste, kopiowanie pytań
      * 
@@ -86,6 +91,7 @@ mfpoll_app.controller('EditController', function ($scope, $routeParams, $locatio
      * Tworzymy dodatkowa strone
      */
     $scope.add_page = function () {
+        console.log($scope.questions.length);
         $scope.questions.push([]);
     };
     
@@ -93,12 +99,20 @@ mfpoll_app.controller('EditController', function ($scope, $routeParams, $locatio
      * Pobiera html pytania
      */
     $scope.get_html = function (page, index) {
-        var question = $scope.questions[page][index];
+        if($scope.questions[page][index] !== undefined){
+            var question = $scope.questions[page][index];
+        }else{
+            if($scope.questions[page + 1] !== undefined){
+                $scope.get_html(page + 1, 0);
+                page = page + 1;
+            }
+            return false;
+        }
         
         Question.get_html(question, function($response){
             var index = $scope.questions[page].indexOf(question);
             $scope.questions[page][index].html = $response.data.html;
-            $scope.get_html(0, index + 1);
+            $scope.get_html(page, index + 1);
             $scope.loading_width = index * 10;
         });
     };
@@ -111,6 +125,9 @@ mfpoll_app.controller('EditController', function ($scope, $routeParams, $locatio
         // AJAX do zapisu
         var model = {
             title: $scope.title,
+            entry: $scope.entry,
+            ending: $scope.ending,
+            status: $scope.status,
             poll_id: $scope.params.id,
             questions: $scope.questions,
         };
@@ -141,10 +158,12 @@ mfpoll_app.component('questionEdit', {
         //Schowanie okienka
         $scope.visible = false;    
         var ctrl = this;
+        
+        ctrl.sortableAnswer = {axis: 'y', handle: ".counter"};
 
         //Obserwator ktory otwiera okno
         $scope.$watch("$ctrl.question", function (newValue, oldValue) {
-
+            
             if ($scope.element != undefined) {
 
                 //Jezeli nowa wartosc to to wyswietlamy okienko formularza
@@ -154,6 +173,25 @@ mfpoll_app.component('questionEdit', {
 
                     //Uzupelnienie formularza
                     if (ctrl.question != null) {
+                        
+                        //Hack na checkboxy bo jesli liczba wystepuje jako string to checkboxy nie sa zaznaczone
+                        angular.forEach(ctrl.question.options, function(value, key) {
+                            if(value == '1'){
+                                ctrl.question.options[key] = 1;
+                            }else if(value == '0'){
+                                ctrl.question.options[key] = 0;
+                            }
+                            if(typeof value === 'object'){
+                                angular.forEach(value, function(_value, _key) {
+                                    alert(_value);
+                                    if(_value == '1'){
+                                        ctrl.question.options[key][_key] = 1;
+                                    }else if(_value == '0'){
+                                        ctrl.question.options[key][_key] = 0;
+                                    }
+                                });
+                            }
+                        });
                         $scope.element = angular.copy(ctrl.question);
                     }
                 }
@@ -162,26 +200,50 @@ mfpoll_app.component('questionEdit', {
         });
 
         $scope.getTemplate = function () {
-            return PLUGIN_URL + '/admin/view/question/' + $scope.element.type + '.html';
+            return MFPOLL_CONFIG['plugin_url'] + '/admin/view/question/' + $scope.element.type + '.html';
         };
 
-        $scope.add_answer = function () {
+        $scope.add_answer = function(type) {
+            type = (typeof type !== 'undefined') ?  type : null;
             if ($scope.element.answers == undefined) {
                 $scope.element.answers = [];
             }
-            $scope.element.answers.push({});
+            if(type != null){
+                $scope.element.answers.push({type:type});
+            }else{
+                $scope.element.answers.push({type:'answer'});
+            }
+            console.log($scope.element.answers);
         };
 
         $scope.delete_answer = function (answer) {
             var index = $scope.element.answers.indexOf(answer)
             $scope.element.answers.splice(index, 1);
         };
+        
+        $scope.add_scale = function () {
+            if ($scope.element.answers == undefined) {
+                $scope.element.answers = [];
+            }
+            $scope.element.answers.push({type:'scale'});
+        };
+        
+        $scope.add_actions = function () {
+            if ($scope.element.options.actions == undefined) {
+                $scope.element.options.actions = [];
+            }
+            $scope.element.options.actions.push({});
+        };
+        
+        $scope.getPagesCount = function () {
+            return $scope.$parent.questions.length;
+        };
 
         //Zapisanie formularza (przypisanie wartosci do modelu)
         $scope.save = function () {
             
             Question.get_html($scope.element, function(response){
-                console.log(response);
+                
                 $scope.element.html = response.data.html;
                 //Usuniecie z rodzica wartosci pozwoli to na ponowne otwarcie formularza przez $watch bo zostanie przypisana nowa wartosc
                 $scope.$parent.editing_elem = null;

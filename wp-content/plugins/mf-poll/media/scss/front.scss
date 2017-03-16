@@ -1,0 +1,128 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 2017-03-02, 09:21:47
+    Author     : Rafal
+*/
+@import 'config';
+@import 'forms';
+
+html,body{
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Roboto',Arial,sans-serif;
+    font-weight: 400;
+}
+.clearfix::before, .clearfix::after {
+    content:"";
+    display:table;
+}
+.clearfix::after {
+    clear:both;
+}
+.clearfix {
+    zoom:1; /* For IE 6/7 (trigger hasLayout) */
+}
+.container{
+    max-width: 1000px;
+    margin:0px auto;
+    box-sizing: border-box;
+    padding: 0px 15px;
+}
+.container-header{
+    position: relative;
+}
+#header{
+    padding:70px 10px 70px 10px;
+    .logo{
+        display:block;
+        margin:0px auto;
+    }
+}
+#footer{
+    .copyright{
+        text-align: center;
+        font-size: 10px;
+        color:$light-grey;
+    }
+}
+#content{
+    h1.poll-title{
+        color:$color-primary;
+        font-size: 28px;
+        font-weight: 400;
+        box-sizing: border-box;
+        margin:30px 0px;
+        border-bottom: 1px solid $light-grey;
+        padding-bottom: 15px;
+    }
+    h3{
+        font-weight: 400;
+        color: $color-primary;
+    }
+    div.poll-description{
+        color:$light-grey;
+        font-size: 16px;
+    }
+    #button-bar{
+        text-align: center;
+        margin:20px 0px 70px 0px;
+    }
+}
+.btn{
+    display:inline-block;
+    padding: 7px 20px;
+    background-color: $color-primary;
+    color:white;
+    font-weight:700;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 2px;
+    border-bottom:2px solid rgba(0,0,0,0.3);
+    position:relative;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    overflow:hidden;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    margin:0px 5px;
+    &.btn-prev{
+        background-color: $light-grey;
+        color: rgba(0,0,0,0.8);
+        border-color: rgba(0,0,0,0.2)
+    }
+    &:before{
+        position: absolute;
+        top:50%;
+        left:50%;
+        width:0px;
+        height:0px;
+        content: " ";
+        transform: translate(-50%, -50%);
+        display: block;
+        background-color: rgba(0,0,0,0.2);
+        z-index: -1;
+        border-radius: 50px;
+        -webkit-transition-duration: 0.3s;
+        transition-duration: 0.3s; 
+    }
+    &:hover:before{
+        width: 100px;
+        height: 100px;
+    }
+}
+.page-for-user{
+    position: absolute;
+    right:15px;
+    top:50%;
+    transform: translateY(-50%);
+    display: inline-block;
+    background-color: $light-grey;
+    width:100px;
+    text-align:center;
+    padding:10px 5px;
+    border-radius: 2px;
+}

@@ -13,6 +13,8 @@ define('MFPPREFIX', 'MFP');
 require_once str_replace('wp-content\plugins\mf-poll\application', '', MFPPATH) . 'wp-load.php';
 require_once MFPPATH . '/system/view.php';
 require_once MFPPATH . '/system/model.php';
+require_once MFPPATH . '/system/arr.php';
+require_once MFPPATH . '/system/validator.php';
 
 // Autoloader controllerów i modeli
 spl_autoload_register(function ($class) {

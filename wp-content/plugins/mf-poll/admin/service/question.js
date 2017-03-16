@@ -11,7 +11,7 @@ mfpoll_app.service('Question', function ($http, $httpParamSerializerJQLike) {
     this.get_html = function (question, success) {
         $http({
             method: 'POST',
-            url: 'http://localhost/wordpress/wp-content/plugins/mf-poll/application/bootstrap.php?controller=question&action=index',
+            url: MFPOLL_CONFIG.url +'/wp-content/plugins/mf-poll/application/bootstrap.php?controller=question&action=index',
             data: $httpParamSerializerJQLike(angular.copy(question)),
             //data: $httpParamSerializerJQLike({json: JSON.stringify(question)}),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -34,7 +34,7 @@ mfpoll_app.service('Question', function ($http, $httpParamSerializerJQLike) {
         });
         $http({
             method: 'POST',
-            url: 'http://localhost/wordpress/wp-content/plugins/mf-poll/application/bootstrap.php?controller=question&action=save',
+            url: MFPOLL_CONFIG.url +'/wp-content/plugins/mf-poll/application/bootstrap.php?controller=question&action=save',
             data: param(model),
             //data: $httpParamSerializerJQLike({json: JSON.stringify(question)}),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -46,9 +46,5 @@ mfpoll_app.service('Question', function ($http, $httpParamSerializerJQLike) {
             // or server returns response with an error status.
         });
     };
-        
-    this.sayHello = function () {
-        return 'Hello, ' + _username;
-    };
-    
+
 });

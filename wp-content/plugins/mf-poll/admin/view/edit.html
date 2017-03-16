@@ -1,51 +1,79 @@
-<h1>{{ 'EDIT_POLL' | translate }}<a class="page-title-action" ng-href="{{ '#/' | route }}">{{ 'LIST' | translate }}</a></h1>
-<div id="poststuff" class="load1">
-    <form name="addform">
-        <div id="titlediv">
-            <div id="titlewrap">
-                <input name="title" size="30" value="" id="title" autocomplete="off" type="text" ng-model="title" placeholder="{{ 'TITLE' | translate }}" ng-minlength="3"/>
-                <p ng-class="{'hidden':addform.title.$valid}">{{ 'TITLE_MUST_CONTAIN_AT_LEAST_3_CHARACTERS' | translate}}</p>
-                <p ng-class="{'hidden':!addform.title.$valid || title == null || title == ''}">{{ 'FORM_URL' | translate }}: <span class="preview-url">{{ config.url + '/poll/12/' }}{{ title | sanitize_title }}</span></p>
-            </div>
-        </div>
-    </form>
-    <div class="loader-bar">
-        <span>
-            <span style="width:{{loading_width}}%;"></span>
-        </span>
-    </div>
-    <div id="questions-list" >
-        <div id="questions-list-navbar">
-            <div id="navbar">
-                <button class="button" ng-click="sort_question = !sort_question" ng-init="sort_question=false" ng-disabled="sort_page">{{ 'SORT_QUESTION' | translate }}</button>
-                <button class="button" ng-click="sort_page = !sort_page" ng-init="sort_page=false" ng-disabled="sort_question">{{ 'SORT_PAGE' | translate }}</button>
-            </div>
-        </div>
-        <div class="page" ng-class="{'sortable-page': sort_page, 'sortable-question': sort_question}">
-            <div ui-sortable="sortableOptionsPage" ng-model="questions" class="sortable-page">
-                <div ng-repeat="(key,page) in questions">
-                    <h3 class="page-number"><span>{{key + 1}} {{ 'PAGE' | translate }}</span><span class="handle-page"><i class="fa fa-arrows-v"></i></span></h3>
-                    <div ui-sortable="sortableOptions" ng-model="page" class="sortable-list" ng-class="{'empty': !page.length}">
-                        <div class="question-element" ng-repeat="(klucz,question) in page">
-                            <div class="question-title">{{question.title}}</div>
-                            <div class="question-content">
-                                <div ng-bind-html="to_trusted(question.html)"></div>
-                                <div class="question-control">
-                                    <button ng-click="set_edit_element(question)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> {{ 'EDIT' | translate }}</button>
-                                    <button ng-click="copy(question, key)"><i class="fa fa-files-o" aria-hidden="true"></i> {{ 'COPY' | translate }}</button>
-                                    <button ng-click="remove(question, key)"><i class="fa fa-times" aria-hidden="true"></i></i> {{ 'REMOVE' | translate }}</button>
-                                </div>
-                            </div>
-                            <span class="handle-question"><i class="fa fa-arrows-v"></i></span>
-                        </div>
-                    </div>
-                    <mf-modal class="add-question-btn" header-title="{{ 'ADD_QUESTION' | translate }}" content="add-question.html" save="save_modal_add_question" button-text="{{ 'ADD_QUESTION' |translate }}" page="{{key}}"></mf-modal>
+<div ng-show="page_load" class="preloader preloader-big">
+    {{'LOADING'|translate}}...
+</div>
+<div ng-show="!page_load" class="slide-animate page-{{type}}">
+    <h1>{{ 'EDIT_POLL' | translate }}<a class="page-title-action" ng-href="{{ '#/' | route }}">{{ 'LIST' | translate }}</a></h1>
+    <div id="poststuff">
+        <form name="addform">
+            <div id="titlediv">
+                <div id="titlewrap">
+                    <input name="title" size="30" value="" id="title" autocomplete="off" type="text" ng-model="title" placeholder="{{ 'TITLE' | translate }}" ng-minlength="3"/>
+                    <p ng-class="{'hidden':addform.title.$valid}">{{ 'TITLE_MUST_CONTAIN_AT_LEAST_3_CHARACTERS' | translate}}</p>
+                    <p ng-class="{'hidden':!addform.title.$valid || title == null || title == ''}">{{ 'URL' | translate }}: <span class="preview-url">{{ config.url + '/poll/12/' }}{{ title | sanitize_title }}</span></p>
+                    
                 </div>
             </div>
+            <div class="status-poll">
+                <span class="status-title">{{'STATUS'|translate}}:</span>
+                <div class="input-radio">
+                    <input type="radio" id="status-bulid" class="regular-radio" ng-model="status" value="0"/><label for="status-bulid"></label><label for="status-bulid">{{ 'BULID' | translate }}</label><br/>
+                </div>
+                <div class="input-radio">
+                    <input type="radio" id="status-collect" class="regular-radio" ng-model="status" value="1"/><label for="status-collect"></label><label for="status-collect">{{ 'COLLECTING_RESULTS' | translate }}</label><br/>
+                </div>
+                <div class="input-radio">
+                    <input type="radio" id="status-summary" class="regular-radio" ng-model="status" value="2"/><label for="status-summary"></label><label for="status-summary">{{ 'SUMMARY' | translate }}</label><br/>
+                </div>
+            </div>
+            <div class="textarea-block">
+                <label for="q-description">{{'TEXT_OF_THANKS'| translate}}:</label>
+                <textarea ng-model="ending">
+                </textarea>
+            </div>
+        </form>
+        <div class="loader-bar">
+            <span>
+                <span style="width:{{loading_width}}%;"></span>
+            </span>
         </div>
-        <button ng-click="add_page()" class="button add_page_button"><span>{{ 'ADD_PAGE' | translate }}</span></button>
-        <question-edit question="editing_elem"></question-edit>
+        <div id="questions-list" >
+            <div id="questions-list-navbar">
+                <div id="navbar">
+                    <div class="left">
+                        <button class="button button-primary" ng-click="sort_question = !sort_question" ng-init="sort_question=false" ng-disabled="sort_page">{{ 'SORT_QUESTION' | translate }}</button>
+                        <button class="button button-primary" ng-click="sort_page = !sort_page" ng-init="sort_page=false" ng-disabled="sort_question">{{ 'SORT_PAGE' | translate }}</button>
+                    </div>
+                    <div class="right">
+                        <button ng-click="save_forms()" class="button">{{ 'SAVE' | translate }}</button>
+                    </div>
+                </div>
+            </div>
+            <div class="page" ng-class="{'sortable-page': sort_page, 'sortable-question': sort_question}">
+                <div ui-sortable="sortableOptionsPage" ng-model="questions" class="sortable-page">
+                    <div ng-repeat="(key,page) in questions">
+                        <h3 class="page-number"><span>{{key + 1}} {{ 'PAGE' | translate }}<i class="dashicons dashicons-no-alt remove-page" ng-click="remove_page(page)"></i></span><span class="handle-page"><i class="fa fa-arrows-v"></i></span></h3>
+                        <div ui-sortable="sortableOptions" ng-model="page" class="sortable-list" ng-class="{'empty': !page.length}">
+                            <div class="question-element" ng-repeat="(klucz,question) in page" ng-class="{'remove': question.remove}">
+                                <div class="question-title">{{question.title}}</div>
+                                <div class="please-edit-question" ng-if="question.title == null">{{'PLEASE_EDIT_QUESTION'}}</div>
+                                <div class="question-content">
+                                    <div ng-bind-html="to_trusted(question.html)"></div>
+                                    <div class="question-control">
+                                        <button ng-click="set_edit_element(question)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> {{ 'EDIT' | translate }}</button>
+                                        <button ng-click="copy(question, key)"><i class="fa fa-files-o" aria-hidden="true"></i> {{ 'COPY' | translate }}</button>
+                                        <button ng-click="remove(question, key)"><i class="fa fa-times" aria-hidden="true"></i></i> {{ 'REMOVE' | translate }}</button>
+                                    </div>
+                                </div>
+                                <span class="handle-question"><i class="fa fa-arrows-v"></i></span>
+                            </div>
+                        </div>
+                        <mf-modal class="add-question-btn" header-title="{{ 'ADD_QUESTION' | translate }}" content="add-question.html" save="save_modal_add_question" button-text="{{ 'ADD_QUESTION' |translate }}" page="{{key}}"></mf-modal>
+                    </div>
+                </div>
+            </div>
+            <button ng-click="add_page()" class="button add_page_button"><span>{{ 'ADD_PAGE' | translate }}</span></button>
+            <question-edit question="editing_elem"></question-edit>
+        </div>
     </div>
-    <!--<mf-modal header-title="{{ 'TEST' | translate }}" content="sadad  sdad d" button-text="{{ 'OPEN' | translate }}"></mf-modal>-->
-    <button ng-click="save_forms()" class="button">{{ 'SAVE' | translate }}</button>
+
 </div>

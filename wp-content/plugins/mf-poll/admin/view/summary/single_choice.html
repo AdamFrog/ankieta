@@ -1,0 +1,22 @@
+<table class="summary-table table-{{question.type}}" cellspacing="0">
+    <thead>
+        <tr>
+            <th class="text-center">
+                {{'ANSWER'|translate}}
+            </th>
+            <th class="text-center">
+                {{'REPLY'|translate}}
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="answer in question.answers">
+            <td class="answer-title">{{answer.title}}</td>
+            <td class="text-center">{{ getVar(result.summary[answer.id])}}</td>
+        </tr>
+        <tr>
+            <td class="text-right">{{'SUM'|translate}}</td>
+            <td class="text-center">{{ getVar(result.count_reply)}}</td>
+        </tr>
+    </tbody>
+</table>
